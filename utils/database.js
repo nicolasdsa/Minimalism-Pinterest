@@ -1,19 +1,19 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
 class DataBase {
   constructor() {
     this.url = 'mongodb://localhost:27017';
-    this.client = new MongoClient(this.url);
+    this.db = 'pinterest'
   }
 
   async init() {
-    await this.client.connect();
-    this.db = this.client.db('pinterest');
+    await mongoose.connect(`${this.url}/${this.db}`)
+    this.connection = mongoose.connection;
   }
 
-  getCollection(collection){
-    return this.db.collection(collection);
+  getCollection(collection, schema){
+    return this.connection.model(collection, schema);
   }
 }
 
-module.exports = new DataBase();
+module.exports = new DataBase()
