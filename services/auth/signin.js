@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const AuthController = require("../../controllers/auth");
+const ApiError = require("../../utils/apiError");
 
 const signinSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -22,7 +23,7 @@ const signin = async (req, res) => {
       token,
     });
   } catch (err) {
-    return res.status(400).send({message:"Invalid Email or Password"});
+    throw ApiError.badRequest("Invalid Email or Password", {});
   }
 };
 

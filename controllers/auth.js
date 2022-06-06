@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const UsersController = require("./users");
 const jwt = require("jsonwebtoken");
+const ApiError = require("../utils/apiError");
 
 const secret = "t3st4nd0";
 
@@ -9,11 +10,13 @@ class AuthController {
     const salt = bcrypt.genSaltSync(12);
     const hash = bcrypt.hashSync(password, salt);
 
-    /*const verify = await UsersController.getUser(email);
+    const verify = await UsersController.getUser(email);
+
+    console.log(verify);
 
     if(verify){
-      return res.status(200).send({message: "Email is already in use"})
-    }*/
+      throw ApiError.badRequest("Email is already in use", {});
+    }
 
     const id = await UsersController.create({
       name,
@@ -27,12 +30,12 @@ class AuthController {
     const user = await UsersController.getUser(email);
 
     if (!user) {
-      throw new Error("Invalid email");
+      throw ApiError.badRequest("Invalid password", {});
     }
 
     const isValidPassword = bcrypt.compareSync(password, user.password);
     if (!isValidPassword) {
-      throw new Error("Invalid password");
+      throw ApiError.badRequest("Invalid password", {});
     }
 
     const token = jwt.sign({ id: user.id, email: user.email }, secret);

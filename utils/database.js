@@ -12,7 +12,11 @@ class DataBase {
   }
 
   getCollection(collection, schema){
-    return this.connection.model(collection, schema);
+      try {
+        return this.connection.model(collection)
+      } catch (error) {
+        return this.connection.model(collection, schema);
+    }
   }
 }
 
