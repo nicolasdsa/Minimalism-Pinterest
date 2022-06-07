@@ -12,8 +12,7 @@ class UsersModel extends Model {
   }
 
   async getUser(userEmail) {
-    const usersData = await this.collection.find({email: userEmail}).exec();
-
+    const usersData = await this.collection.findOne({email: userEmail}).exec();
     return usersData;
   }
 
