@@ -5,6 +5,9 @@ const database = require('./utils/database');
 const authRouter = require("./services/auth");
 const pinsRouter = require('./services/pins');
 const imagesRouter = require('./services/images');
+const fileUpload = require('express-fileupload');
+
+server.use(fileUpload());
 server.use(bodyParser.json());
 
 server.listen(3000, async () => {
