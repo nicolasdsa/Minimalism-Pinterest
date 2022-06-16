@@ -1,5 +1,4 @@
 const Model = require("../utils/model");
-const mongoose = require('mongoose');
 
 class UsersModel extends Model {
   constructor() {
