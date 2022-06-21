@@ -11,6 +11,11 @@ class UsersController {
     return user;
   }
 
+   async updateUser(id){
+    const updateUser = await UsersModel.updateUser(id);
+    return updateUser
+   }
+
 }
 
 module.exports = new UsersController();

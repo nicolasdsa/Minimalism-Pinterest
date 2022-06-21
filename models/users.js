@@ -1,4 +1,5 @@
 const Model = require("../utils/model");
+const { ObjectId } = require("mongoose");
 
 class UsersModel extends Model {
   constructor() {
@@ -13,6 +14,12 @@ class UsersModel extends Model {
   async getUser(userEmail) {
     const usersData = await this.collection.findOne({email: userEmail}).exec();
     return usersData;
+  }
+
+  async updateUser(id) {
+    const date = new Date();
+    const updateUser = await this.collection.findOneAndUpdate({_id: id}, {updatedAt: date});
+    return updateUser
   }
 
 }
