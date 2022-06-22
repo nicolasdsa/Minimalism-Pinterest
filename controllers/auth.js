@@ -6,22 +6,21 @@ const ApiError = require("../utils/apiError");
 const secret = "t3st4nd0";
 
 class AuthController {
-  static async signup({ name, email, password }) {
+  static async signup({ email, password, username }) {
     const salt = bcrypt.genSaltSync(12);
     const hash = bcrypt.hashSync(password, salt);
 
     const verify = await UsersController.getUser(email);
 
-    console.log(verify);
 
     if(verify){
       throw ApiError.badRequest("Email is already in use", {});
     }
 
     const id = await UsersController.create({
-      name,
       email,
       password: hash,
+      username,
     });
     return id;
   }

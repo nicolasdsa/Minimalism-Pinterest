@@ -3,11 +3,13 @@ const PinsController = require("../../controllers/pins");
 const ApiError = require("../../utils/apiError");
 
 const schema = Joi.object({
-  comment: Joi.string().required()
+  react: Joi.string().valid('like', 'deslike').required()
 });
 
 const route = async (req, res) => {
   const { error, value } = schema.validate(req.body);
+
+  const {react} = req.body;
 
   if (error) {
     return res.status(400).send(error);
@@ -20,7 +22,13 @@ const route = async (req, res) => {
   }
 
 
-  const comment = await PinsController.comment(req.body, req.user.id, req.params.id);
+  if(react == 'like'){
+    const like = await PinsController.like(req.user.id, req.params.id);
+  }
+
+  if(react == 'deslike'){
+    const deslike = await PinsController.deslike(req.user.id);
+  }
   
   return res.status(200).send({
     success: true

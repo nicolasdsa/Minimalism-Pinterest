@@ -3,11 +3,12 @@ const { ObjectId } = require("mongoose");
 
 class UsersModel extends Model {
   constructor() {
-    super("users", {name: 'string',  email: 'string', password: 'string' });
+    super("users", {email: 'string', password: 'string', username: 'string', createdAt: Date, updatedAt: Date });
   }
 
   async create(user){
-    const id = await this.collection(user).save();
+    const date = new Date();
+    const id = await this.collection({...user, createdAt: date, updatedAt: date}).save();
     return id
   }
 

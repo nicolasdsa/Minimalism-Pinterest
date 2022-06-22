@@ -4,8 +4,8 @@ const PinsController = require("../../controllers/pins");
 const schema = Joi.object({
   imageUrl: Joi.string().required(),
   texts: Joi.object({
-    title: Joi.string().default('title'),
-    description: Joi.string().default('description')
+    title: Joi.string().default(''),
+    description: Joi.string().default('')
   })
 });
 
