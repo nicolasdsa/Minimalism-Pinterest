@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const { get } = require("mongoose");
 const PinsController = require("../../controllers/pins");
 const ApiError = require("../../utils/apiError");
 
@@ -16,7 +17,6 @@ const route = async (req, res) => {
   }
 
   const getPin = await PinsController.getPin(req.params.id);
-
   if(!getPin){
     throw ApiError.badRequest("Invalid Id pin", {});
   }
@@ -27,7 +27,7 @@ const route = async (req, res) => {
   }
 
   if(react == 'deslike'){
-    const deslike = await PinsController.deslike(req.user.id);
+    const deslike = await PinsController.deslike(req.user.id, req.params.id);
   }
   
   return res.status(200).send({

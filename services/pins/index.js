@@ -11,7 +11,7 @@ const reactPins = require('./react');
 router.get('/', authenticationMiddleware, routeMiddleware(listPins));
 router.get('/me/' ,authenticationMiddleware, routeMiddleware(mePins));
 router.post('/', authenticationMiddleware, routeMiddleware(createPins));
-router.post('/:id/comments', authenticationMiddleware, routeMiddleware(commentPins));
+router.post('/:id/comment', authenticationMiddleware, routeMiddleware(commentPins));
 router.post('/:id/react', authenticationMiddleware, routeMiddleware(reactPins));
 
 module.exports = router;

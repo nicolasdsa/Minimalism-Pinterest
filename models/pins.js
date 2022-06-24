@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 class pinsModel extends Model {
   constructor() {
-    super("pins", {imageUrl: 'string',  texts: {title: 'string', description: 'string'}, userId: mongoose.ObjectId, comments: [], likes: [], createdAt: Date, updatedAt: Date });
+    super("pins", {imageUrl: 'string',  texts: {title: 'string', description: 'string'}, userId: mongoose.ObjectId, comments: [mongoose.ObjectId], likes: [mongoose.ObjectId], createdAt: Date, updatedAt: Date });
   }
 
   async create(body, userId){
@@ -33,13 +33,19 @@ class pinsModel extends Model {
   }
 
   async like(idUser, IdPin){
-    const createComment = await this.collection.findOneAndUpdate({_id: IdPin}, {$push: {Likes: idUser}}).exec();
-    return createComment
+    const likeComment = await this.collection.findOneAndUpdate({_id: IdPin}, {$push: {likes: idUser}}).exec();
+    console.log(likeComment);
+    return likeComment
   }
 
-  async teste(idUser, IdPin){
-    const verify = await this.collection.findOne({Likes: {$in: [idUser]}});
-    console.log(verify.likes);
+  async deslike(idUser, idPin){
+    const likeComment = await this.collection.findOneAndUpdate({_id: idPin}, {$pull: {likes: idUser}}).exec();
+    console.log(likeComment);
+    return likeComment
+  }
+
+  async verify(idUser, IdPin){
+    const verify = await this.collection.findOne({$and: [{_id: IdPin}, {likes: idUser}]});
     return verify
   }
 }

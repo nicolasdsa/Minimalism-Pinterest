@@ -26,14 +26,28 @@ class pinsController {
   }
 
   async like(idUser, idPin){
-    const verifyLike = await PinsModel.teste(idUser, idPin)
-    return verifyLike
-    //const like = await PinsModel.like(idUser, idPin);
-    //return like
+    const verify = await PinsModel.verify(idUser, idPin);
+    
+    if(verify){
+      throw ApiError.badRequest("This comment is already liked", {});
+    }
+    const like = await PinsModel.like(idUser, idPin);
+    const update = await usersController.updateUser(idUser);  
+      
+    return like
   }
 
-  async deslike(id){
+  async deslike(idUser, idPin){
+    const verify = await PinsModel.verify(idUser, idPin);
+    
+    if(!verify){
+      throw ApiError.badRequest("This comment is not liked", {});
+    }
 
+    const deslike = await PinsModel.deslike(idUser, idPin);
+    const update = await usersController.updateUser(idUser);  
+
+    return deslike
   }
 
   async comment(comment, id, idPin){
