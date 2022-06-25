@@ -48,6 +48,12 @@ class pinsModel extends Model {
     const verify = await this.collection.findOne({$and: [{_id: IdPin}, {likes: idUser}]});
     return verify
   }
+
+  async updatePin(id){
+    const date = new Date();
+    const updatePin = await this.collection.findOneAndUpdate({_id: id}, {updatedAt: date});
+    return updatePin
+   }
 }
 
 module.exports = new pinsModel();

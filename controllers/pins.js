@@ -32,8 +32,9 @@ class pinsController {
       throw ApiError.badRequest("This comment is already liked", {});
     }
     const like = await PinsModel.like(idUser, idPin);
-    const update = await usersController.updateUser(idUser);  
-      
+    const updateUser = await usersController.updateUser(idUser);  
+    const updatePin = await PinsModel.updatePin(idPin);  
+
     return like
   }
 
@@ -45,17 +46,21 @@ class pinsController {
     }
 
     const deslike = await PinsModel.deslike(idUser, idPin);
-    const update = await usersController.updateUser(idUser);  
+
+    const updateUser = await usersController.updateUser(idUser);  
+    const updatePin = await PinsModel.updatePin(idPin);  
 
     return deslike
   }
 
   async comment(comment, id, idPin){
     const createComment = await commentsController.create(comment, id);
-    const update = await usersController.updateUser(id);    
+    const updateUser = await usersController.updateUser(id); 
+    const updatePin = await PinsModel.updatePin(idPin);  
     const commentPin = await PinsModel.comment(idPin, createComment);
     return commentPin
   }
+
 }
 
 
