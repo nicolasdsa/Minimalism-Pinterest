@@ -1,5 +1,5 @@
 # Minimalism-Pinterest
-Repositorio para projeto de uma locadora de filmes
+Repositorio que tem como objetivo de clonar algumas funções do pinterest.
 
 ## Ambiente de desenvolvimento
 Esse projeto foi desenvolvido utilizando windows, utilizando a porta 27017 para o mongodb e a porta 3000 para o express.
