@@ -34,13 +34,11 @@ class pinsModel extends Model {
 
   async like(idUser, IdPin){
     const likeComment = await this.collection.findOneAndUpdate({_id: IdPin}, {$push: {likes: idUser}}).exec();
-    console.log(likeComment);
     return likeComment
   }
 
   async deslike(idUser, idPin){
     const likeComment = await this.collection.findOneAndUpdate({_id: idPin}, {$pull: {likes: idUser}}).exec();
-    console.log(likeComment);
     return likeComment
   }
 

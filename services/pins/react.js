@@ -18,7 +18,7 @@ const route = async (req, res) => {
 
   const getPin = await PinsController.getPin(req.params.id);
   if(!getPin){
-    throw ApiError.badRequest("Invalid Id pin", {});
+    throw ApiError.NotFound("Invalid Id pin", {});
   }
 
 

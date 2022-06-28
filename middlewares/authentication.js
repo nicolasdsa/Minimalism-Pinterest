@@ -4,7 +4,7 @@ const authentication = (req, res, next) => {
   const tokenData = req.headers.authorization;
 
   if (!tokenData) {
-    return res.status(401).send("Unauthorized");
+    return res.status(401).send({message:"Unauthorized"});
   }
 
   const token = tokenData.split(" ")[1];

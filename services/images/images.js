@@ -7,6 +7,11 @@ const route = async(req, res) => {
     throw ApiError.badRequest("No Image", {});
   }
 
+  if(req.files.image.mimetype.split('/')[0] !== 'image'){
+    throw ApiError.badRequest("Not a image", {});
+  }
+
+
   const upload = await imagesController.upload(req.files);
   
   res.status(200).send({imageUrl: upload})
